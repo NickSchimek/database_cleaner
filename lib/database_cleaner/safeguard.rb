@@ -3,7 +3,7 @@ module DatabaseCleaner
     class Error < Exception
       class RemoteDatabaseUrl < Error
         def initialize
-          super("ENV['DATABASE_URL'] is set to a remote URL '#{ENV['DATABASE_URL']}'. Please refer to https://github.com/DatabaseCleaner/database_cleaner#safeguards")
+          super("ENV['DATABASE_URL'] is set to a remote URL '#{ENV['DATABASE_URL']}'. Please refer to https://github.com/DatabaseCleaner/database_cleaner#safeguards. #{ENV['DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL'] || DatabaseCleaner.allow_remote_database_url || DatabaseCleaner.url_whitelist} <- should be false. What is #{DatabaseCleaner.url_whitelist} and bang #{!!DatabaseCleaner.url_whitelist}")
         end
       end
 

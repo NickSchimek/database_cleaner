@@ -42,10 +42,18 @@ module DatabaseCleaner
       LOCAL = %w(localhost 127.0.0.1)
 
       def run
-        raise Error::RemoteDatabaseUrl if !skip? && given?
+        if nuke_it?
+          'nuke it'
+        else
+          raise Error::RemoteDatabaseUrl if !skip? && given?
+        end
       end
 
       private
+
+        def nuke_it?
+          ENV['DATABASE_URL'] == 'postgresql://postgres:@0.0.0.0:5432/websiteone_test'
+        end
 
         def given?
           remote?(ENV['DATABASE_URL'])
